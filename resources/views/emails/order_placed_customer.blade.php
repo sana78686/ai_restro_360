@@ -94,7 +94,7 @@
     </div>
 
     <div class="footer">
-      &copy; {{ date('Y') }} {{ $businessName ?? $tenantDomain ?? 'RestroManage' }}. All rights reserved.
+      &copy; {{ date('Y') }} {{ $businessName ?? $tenantDomain ?? 'AiRestro360' }}. All rights reserved.
     </div>
   </div>
 </body>

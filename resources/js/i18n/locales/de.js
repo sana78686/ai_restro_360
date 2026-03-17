@@ -53,11 +53,11 @@ export default {
     },
 
     //Main Home Page
-    welcome: 'Willkommen bei Restro Manage',
+    welcome: 'Willkommen bei Ai Restro 360',
     subtitle: 'Ihre ultimative Restaurant-Management-Lösung',
     getStarted: 'LOSLEGEN',
     learnMore: 'MEHR ERFAHREN',
-    whyChoose: 'Warum Restro Manage wählen?',
+    whyChoose: 'Warum Ai Restro 360 wählen?',
 
 
     // Home Page
@@ -121,7 +121,7 @@ export default {
         privacy: 'Datenschutzrichtlinie',
         terms: 'Nutzungsbedingungen',
         location: 'Unser Standort',
-        designedBy: 'Entworfen & Entwickelt von NetOPZ',
+        designedBy: 'Entworfen & Entwickelt von ApimsTec',
         aboutText: 'Wir bieten umfassende Restaurant-Management-Lösungen, um Unternehmen beim Wachstum und Erfolg im modernen digitalen Zeitalter zu unterstützen.',
         quickLinks: {
             quickLinks: 'Quick Links',
@@ -1422,13 +1422,13 @@ export default {
             mailDriverPlaceholder: 'z.B. smtp',
             mailHost: 'Mail-Host',
             mailHostTooltip: 'Die Mail-Server-Adresse, z.B. smtp.ihredomain.com',
-            mailHostPlaceholder: 'z.B. netopz.com',
+            mailHostPlaceholder: 'z.B. apimstec.com',
             mailPort: 'Mail-Port',
             mailPortTooltip: 'Normalerweise 465 (SSL), 587 (TLS) oder 25. Fragen Sie Ihren Anbieter.',
             mailPortPlaceholder: 'z.B. 465',
             mailUsername: 'Mail-Benutzername',
             mailUsernameTooltip: 'Die E-Mail-Adresse oder der Benutzername für Ihr Mail-Konto.',
-            mailUsernamePlaceholder: 'z.B. info@netopz.com',
+            mailUsernamePlaceholder: 'z.B. info@apimstec.com',
             mailPassword: 'Mail-Passwort',
             mailPasswordTooltip: 'Das Passwort für Ihr Mail-Konto. Halten Sie es sicher.',
             mailPasswordPlaceholder: 'Ihr Mail-Passwort',
@@ -1440,7 +1440,7 @@ export default {
             mailFromNamePlaceholder: 'z.B. Ihr Restaurantname',
             businessEmail: 'Geschäfts-E-Mail',
             businessEmailTooltip: 'Die E-Mail-Adresse, die als Absender/Empfänger erscheint.',
-            businessEmailPlaceholder: 'z.B. info@netopz.com'
+            businessEmailPlaceholder: 'z.B. info@apimstec.com'
         },
 
         mail_logs: {

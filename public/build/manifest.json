@@ -125,7 +125,7 @@
       "assets/app-CI-Zk6G1.css"
     ],
     "assets": [
-      "assets/restromanage-logo-dark-DoODsjJo.png",
+      "assets/airestro360-logo-dark-DoODsjJo.png",
       "assets/fa-brands-400-D_cYUPeE.woff2",
       "assets/fa-brands-400-D1LuMI3I.ttf",
       "assets/fa-regular-400-BjRzuEpd.woff2",
@@ -139,9 +139,9 @@
       "assets/marker-icon-hN30_KVU.png"
     ]
   },
-  "resources/js/assets/logo/restromanage-logo-dark.png": {
-    "file": "assets/restromanage-logo-dark-DoODsjJo.png",
-    "src": "resources/js/assets/logo/restromanage-logo-dark.png"
+  "resources/js/assets/logo/airestro360-logo-dark.png": {
+    "file": "assets/airestro360-logo-dark-DoODsjJo.png",
+    "src": "resources/js/assets/logo/airestro360-logo-dark.png"
   },
   "resources/js/views/auth/Login.vue": {
     "file": "assets/Login-VHfXgLhN.js",

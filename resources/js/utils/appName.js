@@ -30,7 +30,7 @@ export async function getAppName() {
   } catch (error) {
     console.error('Error fetching app name:', error);
     // Return fallback
-    return import.meta.env.VITE_APP_NAME || 'RestroManage';
+    return import.meta.env.VITE_APP_NAME || 'AiRestro360';
   } finally {
     appNamePromise = null;
   }
@@ -74,11 +74,11 @@ async function fetchAppNameFromAPI() {
     }
     
     // Fallback
-    return import.meta.env.VITE_APP_NAME || 'RestroManage';
+    return import.meta.env.VITE_APP_NAME || 'AiRestro360';
   } catch (error) {
     console.error('Failed to fetch app name from API:', error);
     // Return fallback
-    return import.meta.env.VITE_APP_NAME || 'RestroManage';
+    return import.meta.env.VITE_APP_NAME || 'AiRestro360';
   }
 }
 
@@ -96,6 +96,6 @@ export function clearAppNameCache() {
  * @returns {string}
  */
 export function getAppNameSync() {
-  return cachedAppName || import.meta.env.VITE_APP_NAME || 'RestroManage';
+  return cachedAppName || import.meta.env.VITE_APP_NAME || 'AiRestro360';
 }
 

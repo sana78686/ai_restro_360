@@ -32,8 +32,8 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
           <div class="container">
             <router-link class="navbar-brand" to="/">
-              <!-- <img src="/assets/logo/restromanage-logo.png" alt="RestroManage" class="logo" /> -->
-                <img src="@/assets/logo/restromanage-logo-dark.png" alt="RestroManage" class="logo" />
+              <!-- <img src="/assets/logo/airestro360-logo.png" alt="AiRestro360" class="logo" /> -->
+                <img src="@/assets/logo/airestro360-logo-dark.png" alt="AiRestro360" class="logo" />
             </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
               <span class="navbar-toggler-icon"></span>

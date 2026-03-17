@@ -14,7 +14,7 @@ return [
     */
 
     'domain' => env('APP_DOMAIN', 'apimstec.com'),
-    'name' => env('APP_NAME', 'RestroManage'),
+    'name' => env('APP_NAME', 'AiRestro360'),
     'faker_locale' => 'en_US',
 
     /*

@@ -135,7 +135,7 @@
     <div class="email-container">
         <!-- Header -->
         <div class="header">
-            <h1>🎉 Welcome to {{ config('app.name', 'RestroManage') }}!</h1>
+            <h1>🎉 Welcome to {{ config('app.name', 'AiRestro360') }}!</h1>
             <p>Your Restaurant Management System is Ready</p>
         </div>
 
@@ -205,7 +205,7 @@
         <!-- Footer -->
         <div class="footer">
             <p style="margin: 0 0 10px 0;">
-                <strong>{{ config('app.name', 'RestroManage') }}</strong> — Simplifying Restaurant Management
+                <strong>{{ config('app.name', 'AiRestro360') }}</strong> — Simplifying Restaurant Management
             </p>
             <p style="margin: 0; font-size: 12px; color: #999;">
                 This is an automated message, please do not reply.

@@ -54,11 +54,11 @@ export default {
     },
 
     //Main Home Page
-    welcome: 'Welcome to Restro Manage',
+    welcome: 'Welcome to Ai Restro 360',
     subtitle: 'Your Ultimate Restaurant Management Solution',
     getStarted: 'GET STARTED',
     learnMore: 'LEARN MORE',
-    whyChoose: 'Why Choose Restro Manage?',
+    whyChoose: 'Why Choose Ai Restro 360?',
 
 
     // Home Page
@@ -122,7 +122,7 @@ export default {
         privacy: 'Privacy Policy',
         terms: 'Terms of Service',
         location: 'Our location',
-        designedBy: 'Designed & Developed by NetOPZ',
+        designedBy: 'Designed & Developed by ApimsTec',
         aboutText: 'We provide comprehensive restaurant management solutions to help businesses grow and succeed in the modern digital age.',
         quickLinks: {
             quickLinks: 'Quick Links',
@@ -1803,13 +1803,13 @@ export default {
             mailDriverPlaceholder: 'e.g. smtp',
             mailHost: 'Mail Host',
             mailHostTooltip: 'The mail server address, e.g. smtp.yourdomain.com',
-            mailHostPlaceholder: 'e.g. netopz.com',
+            mailHostPlaceholder: 'e.g. apimstec.com',
             mailPort: 'Mail Port',
             mailPortTooltip: 'Usually 465 (SSL), 587 (TLS), or 25. Ask your provider.',
             mailPortPlaceholder: 'e.g. 465',
             mailUsername: 'Mail Username',
             mailUsernameTooltip: 'The email address or username for your mail account.',
-            mailUsernamePlaceholder: 'e.g. info@netopz.com',
+            mailUsernamePlaceholder: 'e.g. info@apimstec.com',
             mailPassword: 'Mail Password',
             mailPasswordTooltip: 'The password for your mail account. Keep it secure.',
             mailPasswordPlaceholder: 'Your mail password',
@@ -1821,7 +1821,7 @@ export default {
             mailFromNamePlaceholder: 'e.g. Your Restaurant Name',
             businessEmail: 'Business Email',
             businessEmailTooltip: 'The email address that will appear as sender/receiver.',
-            businessEmailPlaceholder: 'e.g. info@netopz.com'
+            businessEmailPlaceholder: 'e.g. info@apimstec.com'
         },
 
         mail_logs: {

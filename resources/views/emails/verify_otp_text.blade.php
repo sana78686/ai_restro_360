@@ -1,4 +1,4 @@
-{{ config('app.name', 'RestroManage') }} - Email Verification
+{{ config('app.name', 'AiRestro360') }} - Email Verification
 ================================================
 
 Hello,
@@ -16,7 +16,7 @@ If you didn't request this verification code, please ignore this email or contac
 Need help? If you're having trouble with verification, please contact our support team at {{ config('app.contact.email', 'info@apimstec.com') }}
 
 ---
-{{ config('app.name', 'RestroManage') }}
+{{ config('app.name', 'AiRestro360') }}
 Restaurant Management System
 
 This is an automated message. Please do not reply to this email.

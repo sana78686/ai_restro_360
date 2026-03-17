@@ -29,7 +29,7 @@ class VerifyOtpMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Verify Your Email - ' . config('app.name', 'RestroManage'),
+            subject: 'Verify Your Email - ' . config('app.name', 'AiRestro360'),
         );
     }
 

@@ -129,7 +129,7 @@
     <div class="email-wrapper">
         <!-- Header -->
         <div class="email-header">
-            <h1>{{ config('app.name', 'RestroManage') }}</h1>
+            <h1>{{ config('app.name', 'AiRestro360') }}</h1>
             <p style="margin-top: 8px; opacity: 0.9;">Email Verification</p>
         </div>
 
@@ -137,7 +137,7 @@
         <div class="email-body">
             <h2>Verify Your Email Address</h2>
             <p>Hello,</p>
-            <p>Thank you for signing up with <strong>{{ config('app.name', 'RestroManage') }}</strong>. Please verify
+            <p>Thank you for signing up with <strong>{{ config('app.name', 'AiRestro360') }}</strong>. Please verify
                 your email using the code below to activate your account.</p>
 
             <div class="otp-box">
@@ -156,7 +156,7 @@
 
         <!-- Footer -->
         <div class="email-footer">
-            <p><strong>{{ config('app.name', 'RestroManage') }}</strong> — Restaurant Management System</p>
+            <p><strong>{{ config('app.name', 'AiRestro360') }}</strong> — Restaurant Management System</p>
             <p style="font-size: 12px; color: #aaa;">This is an automated message. Please do not reply.</p>
         </div>
     </div>

@@ -1,11 +1,11 @@
-name: Manual Deploy to RestroManage
+name: Manual Deploy to AiRestro360
 
 on:
   workflow_dispatch:  # allows manual trigger from GitHub UI
 
 jobs:
   deploy:
-    name: Deploy to RestroManage VM
+    name: Deploy to AiRestro360 VM
     runs-on: ubuntu-latest
 
     steps:
@@ -14,18 +14,18 @@ jobs:
 
       - name: 🔑 Set up SSH key
         run: |
-          echo "${{ secrets.RESTROMANAGE_SERVER_SSHKEY }}" > private_key
+          echo "${{ secrets.AIRESTRO360_SERVER_SSHKEY }}" > private_key
           chmod 600 private_key
 
       - name: 🚀 Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.RESTROMANAGE_SERVER_HOST }}
-          username: ${{ secrets.RESTROMANAGE_SERVER_USER }}
-          key: ${{ secrets.RESTROMANAGE_SERVER_SSHKEY }}
+          host: ${{ secrets.AIRESTRO360_SERVER_HOST }}
+          username: ${{ secrets.AIRESTRO360_SERVER_USER }}
+          key: ${{ secrets.AIRESTRO360_SERVER_SSHKEY }}
           port: 22
           script: |
-            echo "Starting deployment on RestroManage VM..."
+            echo "Starting deployment on AiRestro360 VM..."
 
             # Run as www-data for Laravel operations
             sudo -u www-data /bin/bash -c '

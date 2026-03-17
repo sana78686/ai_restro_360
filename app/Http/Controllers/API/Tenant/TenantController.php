@@ -68,7 +68,7 @@ class TenantController extends Controller
             }
 
             $tenantId = Str::random(8);
-            $tenantDatabase = 'restromanage_tenant_' . $tenantId;
+            $tenantDatabase = 'airestro360_tenant_' . $tenantId;
 
             // Create tenant
             $tenant = Tenant::create([

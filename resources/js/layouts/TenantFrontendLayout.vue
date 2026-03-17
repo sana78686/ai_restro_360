@@ -61,11 +61,11 @@
                         <!-- Left: Logo -->
                         <div class="navbar-left d-flex justify-content-center">
                             <router-link class="navbar-brand" to="/">
-                                <img :src="settings?.logo || defaultLogo" alt="RestroManage" class="logo" />
+                                <img :src="settings?.logo || defaultLogo" alt="AiRestro360" class="logo" />
 
 
 
-                                <!-- <img src="@/assets/logo/restromanage-logo-white.png" alt="RestroManage" class="logo" /> -->
+                                <!-- <img src="@/assets/logo/airestro360-logo-white.png" alt="AiRestro360" class="logo" /> -->
                             </router-link>
                         </div>
                         <!-- Center: Navigation (unchanged for desktop) -->
@@ -129,8 +129,8 @@
                     <div v-if="mobileMenuOpen" class="mobile-menu-overlay" @click.self="closeMobileMenu">
                         <div class="mobile-menu-drawer">
                             <div class="d-flex justify-content-between align-items-center px-3 py-3 border-bottom mt-5">
-                                <!-- <img src="/assets/logo/restromanage-logo.png" alt="RestroManage" style="height:32px;"> -->
-                                <img :src="settings?.logo || defaultLogo" alt="RestroManage" class="logo" />
+                                <!-- <img src="/assets/logo/airestro360-logo.png" alt="AiRestro360" style="height:32px;"> -->
+                                <img :src="settings?.logo || defaultLogo" alt="AiRestro360" class="logo" />
 
 
                                 <button class="btn btn-link text-danger fs-2" @click="closeMobileMenu"
@@ -239,8 +239,8 @@
                     <div class="col-md-4 mb-4 mb-md-0">
                         <div class="footer-card h-100 d-flex flex-column align-items-md-start align-items-center p-4">
 
-                            <!-- <img src="/assets/logo/restromanage-logo-white.png" alt="RestroManage" style=" margin-bottom: 1.5rem;"> -->
-                            <img :src="settings?.logo || '/assets/logo/restromanage-logo-white.png'" alt="RestroManage"
+                            <!-- <img src="/assets/logo/airestro360-logo-white.png" alt="AiRestro360" style=" margin-bottom: 1.5rem;"> -->
+                            <img :src="settings?.logo || '/assets/logo/airestro360-logo-white.png'" alt="AiRestro360"
                                 class="logo" />
 
                             <p class="mb-3 text-center text-md-start" style="max-width: 320px;">
@@ -305,7 +305,7 @@
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
                     <div class="mb-2 mb-md-0">{{ $t('Copyright') }} © {{ new Date().getFullYear() }} {{
                         $t('AllRightsReserved') }} </div>
-                    <div class="text-end small">{{ $t('DesignedDevelopedby') }} <span class="text-warning">NetOPZ</span>
+                    <div class="text-end small">{{ $t('DesignedDevelopedby') }} <span class="text-warning">ApimsTec</span>
                     </div>
                 </div>
             </div>
@@ -361,7 +361,7 @@ import { ref, onMounted, provide, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import LanguageSwitcher from '../components/frontend/LanguageSwitcher.vue'
 import axios from 'axios'
-import defaultLogo from '@/assets/logo/restromanage-logo-dark.png'
+import defaultLogo from '@/assets/logo/airestro360-logo-dark.png'
 import Swal from 'sweetalert2'
 import { Tooltip } from 'bootstrap'
 import { useCart } from '../composables/useCart'

@@ -14,7 +14,7 @@ class AppNameHelper
      */
     public static function getAppName(): string
     {
-        $defaultName = config('app.name', 'RestroManage');
+        $defaultName = config('app.name', 'AiRestro360');
 
         try {
             // Check if we're in tenant context - multiple methods
@@ -39,7 +39,7 @@ class AppNameHelper
 
             // Method 3: Check by hostname as fallback
             if (!$isTenantContext) {
-                $mainDomain = config('app.name', 'RestroManage');
+                $mainDomain = config('app.name', 'AiRestro360');
                 $currentHost = request()->getHost();
                 $currentPort = request()->getPort();
                 if ($currentPort && $currentPort != 80 && $currentPort != 443) {

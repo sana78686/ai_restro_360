@@ -3,7 +3,7 @@
     <!-- Sidebar -->
     <div class="sidebar" :class="[{ 'collapsed': isSidebarCollapsed }, { 'show': isSidebarMobileOpen }]">
       <div class="sidebar-header">
-        <img src="/assets/logo/restromanage-logo-white.png" alt="Restro-Manage" class="logo">
+        <img src="/assets/logo/airestro360-logo-white.png" alt="Ai Restro 360" class="logo">
         <button class="collapse-btn" @click="toggleSidebar">
           <i class="fas" :class="isSidebarCollapsed ? 'fa-angle-right' : 'fa-angle-left'"></i>
         </button>

@@ -1,4 +1,4 @@
-🎉 Welcome to {{ config('app.name', 'RestroManage') }}!
+🎉 Welcome to {{ config('app.name', 'AiRestro360') }}!
 ================================================
 
 Hello {{ $user->name ?? 'there' }}!
@@ -53,7 +53,7 @@ We're here to help you make the most of your restaurant management system:
 💡 PRO TIP: Start by setting up your restaurant profile, adding your menu items, and configuring your delivery settings. This will get your system ready for customers in no time!
 
 ---
-{{ config('app.name', 'RestroManage') }}
+{{ config('app.name', 'AiRestro360') }}
 Restaurant Management System
 
 This is an automated message. Please do not reply to this email.
