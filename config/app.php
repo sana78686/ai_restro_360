@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'domain' => env('APP_DOMAIN', 'apimstec.com'),
-    'name' => env('APP_NAME', 'AiRestro360'),
+    'domain' => env('APP_DOMAIN', 'my.airestro360.com'),
+    'name' => env('APP_NAME', 'ai_restro360'),
     'faker_locale' => 'en_US',
 
     /*
@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://apimstec.com/public'),
+    'url' => env('APP_URL', 'https://my.airestro360.com/public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -110,7 +110,7 @@ return [
     */
 
     'contact' => [
-        'email' => env('CONTACT_EMAIL', 'info@apimstec.com'),
+        'email' => env('CONTACT_EMAIL', 'support@airestro360.com'),
         'phone' => env('CONTACT_PHONE', '+61 1300 213 313'),
         'address' => env('CONTACT_ADDRESS', '123 Business Street, NY 10001'),
         'hours' => env('CONTACT_HOURS', 'Mon - Fri: 9:00 AM - 6:00 PM'),
@@ -142,7 +142,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'main_domain' => env('MAIN_DOMAIN', 'apimstec.com'),
+    'main_domain' => env('MAIN_DOMAIN', 'my.airestro360.com'),
     // 'main_domain' => env('MAIN_DOMAIN', 'localhost:8000'),
 
 ];

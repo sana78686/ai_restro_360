@@ -18,7 +18,7 @@ return [
      * Only relevant if you're using the domain or subdomain identification middleware.
      */
     'central_domains' => [
-        'apimstec.com',
+        'my.airestro360.com',
         '127.0.0.1',
         'localhost',
         'localhost:8000'
