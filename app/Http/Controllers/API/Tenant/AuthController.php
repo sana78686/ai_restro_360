@@ -198,7 +198,42 @@ class AuthController extends Controller
         ], 200);
     }
 
+    /**
+     * Local only: read pending OTP from tenant users table (for dev / verify-otp page console).
+     */
+    public function debugPendingOtp(Request $request)
+    {
+        if (! app()->environment('local')) {
+            abort(404);
+        }
 
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        /** @var User|null $user */
+        $user = User::where('email', $request->email)->first();
+
+        if (! $user || empty($user->otp)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No pending OTP for this email.',
+            ], 404);
+        }
+
+        if ($user->otp_expires_at && Carbon::parse($user->otp_expires_at)->isPast()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'OTP in database has expired.',
+            ], 422);
+        }
+
+        return response()->json([
+            'success' => true,
+            'debug_table_otp' => (string) $user->otp,
+            'otp_expires_at' => $user->otp_expires_at,
+        ]);
+    }
 
     public function sendOtp(Request $request)
     {

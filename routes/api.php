@@ -154,6 +154,9 @@ Route::middleware([
     Route::get('/public/cms_menu', [CmsMenuController::class, 'index']);
     Route::post('/verify-otp', [TenantAuthController::class, 'verifyOtp']);
     Route::post('/resend-otp', [TenantAuthController::class, 'resendOtp']);
+    if (app()->environment('local')) {
+        Route::post('/debug/pending-otp', [TenantAuthController::class, 'debugPendingOtp']);
+    }
     Route::post('/send-otp', [TenantAuthController::class, 'sendOtp']);
     Route::post('/reset-password', [TenantAuthController::class, 'resetPassword']);
 

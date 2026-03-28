@@ -67,7 +67,6 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import axios from 'axios'
 import Swal from 'sweetalert2'
 
 const { t } = useI18n()
@@ -79,10 +78,25 @@ const resendCooldown = ref(0)
 const resendTimer = ref(null)
 
 // Check if user has pending verification email
-onMounted(() => {
+onMounted(async () => {
   const email = localStorage.getItem('pending_verification_email')
   if (!email) {
     router.push('/login')
+    return
+  }
+
+  const existing = localStorage.getItem('token')
+  if (existing) {
+    console.info('%c[verify-otp] Stored auth token (copy):', 'color:#0366d6;font-weight:bold', existing)
+  }
+
+  try {
+    const { data } = await window.axios.post('/tenant/debug/pending-otp', { email })
+    if (data?.debug_table_otp) {
+      console.info('%c[verify-otp] OTP from users table (copy):', 'color:#22863a;font-weight:bold', data.debug_table_otp)
+    }
+  } catch {
+    // Route exists only when APP_ENV=local; ignore 404 / errors on production
   }
 })
 
@@ -103,7 +117,7 @@ async function handleVerifyOtp() {
       throw new Error('No pending verification email found')
     }
 
-    const response = await axios.post('/tenant/verify-otp', {
+    const response = await window.axios.post('/tenant/verify-otp', {
       email,
       otp: otp.value,
     })
@@ -112,7 +126,8 @@ async function handleVerifyOtp() {
       const token = response.data.token
       localStorage.setItem('token', token)
       localStorage.removeItem('pending_verification_email')
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      window.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      console.info('%c[verify-otp] New auth token (copy):', 'color:#0366d6;font-weight:bold', token)
 
       await Swal.fire({
         icon: 'success',
@@ -166,7 +181,7 @@ async function handleResendOtp() {
       throw new Error('No pending verification email found')
     }
 
-    const response = await axios.post('/tenant/resend-otp', {
+    const response = await window.axios.post('/tenant/resend-otp', {
       email
     })
 
