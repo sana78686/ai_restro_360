@@ -42,7 +42,7 @@
                         />
                         <img
                             v-else
-                            src="/assets/logo/default-logo.png"
+                            src="/assets/logo/airestro360.png"
                             :alt="tenantSettings.business_name + ' Logo'"
                             class="shadow-sm me-3"
                             style="

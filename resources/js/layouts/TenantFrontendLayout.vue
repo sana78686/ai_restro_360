@@ -240,7 +240,7 @@
                         <div class="footer-card h-100 d-flex flex-column align-items-md-start align-items-center p-4">
 
                             <!-- <img src="/assets/logo/airestro360-logo-white.png" alt="AiRestro360" style=" margin-bottom: 1.5rem;"> -->
-                            <img :src="settings?.logo || '/assets/logo/airestro360-logo-white.png'" alt="AiRestro360"
+                            <img :src="settings?.logo || '/assets/logo/airestro360.png'" alt="AiRestro360"
                                 class="logo" />
 
                             <p class="mb-3 text-center text-md-start" style="max-width: 320px;">
@@ -360,7 +360,7 @@
 import { ref, onMounted, onUnmounted, provide, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import LanguageSwitcher from '../components/frontend/LanguageSwitcher.vue'
-import defaultLogo from '@/assets/logo/airestro360-logo-dark.png'
+const defaultLogo = '/assets/logo/airestro360.png'
 import Swal from 'sweetalert2'
 import { Tooltip } from 'bootstrap'
 import { useCart } from '../composables/useCart'

@@ -33,7 +33,7 @@
           <div class="container">
             <router-link class="navbar-brand" to="/">
               <!-- <img src="/assets/logo/airestro360-logo.png" alt="AiRestro360" class="logo" /> -->
-                <img src="@/assets/logo/airestro360-logo-dark.png" alt="AiRestro360" class="logo" />
+                <img src="/assets/logo/airestro360.png" alt="AiRestro360" class="logo" />
             </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
               <span class="navbar-toggler-icon"></span>

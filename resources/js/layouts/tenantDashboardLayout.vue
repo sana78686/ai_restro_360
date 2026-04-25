@@ -21,7 +21,7 @@
         />
         <img
           v-else
-          src="/assets/logo/default-logo.png"
+          src="/assets/logo/airestro360.png"
           alt="Restro-Manage Logo"
           class="td-header-logo me-3"
           style="object-fit: cover"

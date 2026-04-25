@@ -1,3 +1,6 @@
+# Google OAuth: never commit client JSON or secrets from local disk
+public/assets/console-files/client_secret*.json
+
 /.phpunit.cache
 /node_modules
 # /public/build
@@ -8,6 +11,7 @@
 /vendor
 /docs
 .env
+.cursor
 .env.backup
 .env.production
 .env-live
