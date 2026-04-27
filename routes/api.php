@@ -45,6 +45,7 @@ use App\Http\Controllers\API\Tenant\CustomerController as TenantCustomerControll
 use App\Http\Controllers\API\Tenant\TenantController as RestaurantTenantController;
 use App\Http\Controllers\API\Dashboard\TenantController as DashboardTenantController;
 use App\Http\Controllers\API\Tenant\StockCheckController as TenantStockCheckController;
+use App\Http\Controllers\API\Tenant\BranchController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -244,6 +245,13 @@ Route::prefix('stripe')->group(function () {
             Route::put('/{id}/update-status', [TenantBookingController::class, 'updateStatus']);
             Route::delete('/{id}', [TenantBookingController::class, 'destroy']);
         });
+        // Branches (multi-location dashboard)
+        Route::get('/branches', [BranchController::class, 'index']);
+        Route::post('/branches', [BranchController::class, 'store']);
+        Route::put('/branches/{branch}', [BranchController::class, 'update']);
+        Route::delete('/branches/{branch}', [BranchController::class, 'destroy']);
+        Route::post('/branches/{branch}/set-default', [BranchController::class, 'setDefault']);
+
         // Settings Routes
         Route::put('/settings', [App\Http\Controllers\API\Tenant\SettingController::class, 'update']);
         Route::put('/settings/discount', [App\Http\Controllers\API\Tenant\SettingController::class, 'updateDiscount']);
@@ -307,7 +315,7 @@ Route::prefix('stripe')->group(function () {
 
 
         Route::get('/profile', [ProfileController::class, 'show']);
-        Route::put('/profile', [ProfileController::class, 'update']);
+        Route::match(['put', 'post'], '/profile', [ProfileController::class, 'update']);
 
         // notifications routes for tenant
         Route::get('/notifications/all', [NotificationController::class, 'index'])->name('notifications.all');

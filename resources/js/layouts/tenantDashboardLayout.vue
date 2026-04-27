@@ -69,18 +69,27 @@
         </ul>
       </nav>
 
-      <div class="td-header__right d-flex align-items-center gap-1 flex-shrink-0">
-        <div class="position-relative notification-wrapper" id="notification-wrapper">
-          <button class="btn btn-link td-notify-btn position-relative" data-bs-toggle="tooltip" data-bs-placement="bottom" :title="$t('notifications')" @click="toggleNotificationDropdown">
-            <i class="fas fa-bell"></i>
-            <span v-if="unreadCount > 0" class="notification-badge">{{ unreadCount }}</span>
+      <div class="td-header__right d-flex align-items-center gap-1 gap-sm-2 flex-shrink-0">
+        <div class="position-relative td-notification-wrapper" id="notification-wrapper">
+          <button
+            type="button"
+            class="btn td-notify-btn position-relative"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            :title="$t('notifications')"
+            @click="toggleNotificationDropdown"
+          >
+            <span class="td-notify-btn__ring" aria-hidden="true">
+              <i class="fas fa-bell td-notify-btn__icon"></i>
+            </span>
+            <span v-if="unreadCount > 0" class="td-notify-badge">{{ unreadCount > 99 ? '99+' : unreadCount }}</span>
           </button>
-          <div v-if="showNotificationDropdown" class="notification-dropdown card shadow position-absolute end-0 mt-2" style="min-width:320px; max-width:95vw; z-index:2000; right:0;">
-            <div class="card-header d-flex justify-content-between align-items-center py-2 pl-3 pr-2 bg-white border-bottom">
+          <div v-if="showNotificationDropdown" class="notification-dropdown card td-notify-dropdown position-absolute end-0 mt-2">
+            <div class="card-header td-notify-dropdown__head d-flex justify-content-between align-items-center py-2 px-3 bg-white border-bottom">
               <span class="fw-bold text-xs leading-tight">Notifications</span>
               <button type="button" class="btn-close btn-sm" @click="closeNotificationDropdown" style="font-size:0.75rem;"></button>
             </div>
-            <div class="card-body " style="max-height:350px; overflow:auto;">
+            <div class="card-body td-notify-dropdown__body p-0" style="max-height:350px; overflow:auto;">
               <div v-if="loadingNotifications" class="d-flex justify-content-center align-items-center py-4">
                 <div class="spinner-border spinner-border-sm td-spinner" role="status"></div>
               </div>
@@ -113,22 +122,68 @@
 
         <LanguageSwitcher class="td-header-lang" flag-only />
 
+        <div class="dropdown td-branch-wrap d-none d-md-block">
+          <button
+            class="btn td-branch-btn dropdown-toggle d-flex align-items-center gap-2"
+            type="button"
+            id="branchDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            title="Restaurant branch"
+          >
+            <i class="fas fa-map-marker-alt td-branch-btn__pin" aria-hidden="true"></i>
+            <span class="td-branch-btn__label text-truncate">{{ activeBranch.name }}</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end td-branch-dd shadow-sm" aria-labelledby="branchDropdown">
+            <li><h6 class="dropdown-header td-branch-dd__head px-3 pt-2 pb-1 mb-0">Select branch</h6></li>
+            <li v-for="b in branches" :key="b.id">
+              <button
+                type="button"
+                class="dropdown-item td-branch-dd__item d-flex align-items-center border-0 w-100 text-start"
+                :class="{ 'td-branch-dd__item--active': b.id === activeBranchId }"
+                @click="selectBranch(b.id)"
+              >
+                <i
+                  class="fas fa-map-marker-alt me-2 td-branch-dd__pin flex-shrink-0"
+                  :class="b.id === activeBranchId ? 'td-branch-dd__pin--active' : 'text-muted'"
+                  aria-hidden="true"
+                ></i>
+                <span class="text-truncate">{{ b.name }}</span>
+              </button>
+            </li>
+            <li><hr class="dropdown-divider my-1"></li>
+            <li class="px-2 pb-2">
+              <router-link class="dropdown-item td-branch-dd__manage rounded-2 py-2 fw-semibold" to="/dashboard/settings/branches" @click="closeSidebar">
+                + Manage branches
+              </router-link>
+            </li>
+          </ul>
+        </div>
+
         <div class="dropdown td-profile-wrap" id="profile-dropdown-container">
           <button
-            class="btn btn-link text-dark dropdown-toggle td-profile-trigger p-1 d-flex align-items-center"
+            class="btn btn-link text-dark dropdown-toggle td-profile-trigger d-flex align-items-center gap-2 px-2 py-1"
             type="button"
             id="profileDropdown"
             data-bs-toggle="dropdown"
             aria-expanded="false"
-            :title="user ? user.name + ' (' + (user.role_name || $t('role')) + ')' : $t('profile')"
+            :title="user ? user.name + ' — ' + userRoleLabel : $t('profile')"
             data-bs-placement="bottom"
           >
-            <span v-if="user && user.avatar" class="rounded-circle overflow-hidden flex-shrink-0 td-profile-av">
+            <span v-if="user && user.avatar" class="td-profile-av td-profile-av--squircle overflow-hidden flex-shrink-0">
               <img :src="user.avatar" :alt="user.name" class="td-profile-av-img" />
             </span>
-            <span v-else class="rounded-circle td-profile-avatar text-white d-flex align-items-center justify-content-center flex-shrink-0 td-profile-av">
+            <span
+              v-else
+              class="td-profile-av td-profile-av--squircle td-profile-avatar td-profile-avatar--warm text-white d-flex align-items-center justify-content-center flex-shrink-0"
+            >
               {{ user && user.name ? user.name.charAt(0).toUpperCase() : 'U' }}
             </span>
+            <span class="td-profile-meta d-none d-md-flex flex-column align-items-start text-start lh-sm min-w-0">
+              <span class="td-profile-meta-name text-truncate w-100">{{ user?.name || '—' }}</span>
+              <span class="td-profile-meta-role text-truncate w-100">{{ userRoleLabel }}</span>
+            </span>
+            <i class="fas fa-chevron-down td-profile-chev text-muted small d-none d-sm-block" aria-hidden="true"></i>
           </button>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown" style="min-width: 220px;">
             <li>
@@ -241,89 +296,209 @@
           </button>
         </div>
         <div class="td-sidebar-scroll">
+          <div class="td-sidebar-branch d-md-none px-2 pt-2 pb-1">
+            <label class="td-sidebar-branch__label">Branch</label>
+            <select
+              class="form-select form-select-sm td-sidebar-branch__select"
+              :value="activeBranchId"
+              aria-label="Restaurant branch"
+              @change="selectBranch($event.target.value)"
+            >
+              <option v-for="b in branches" :key="b.id" :value="b.id">{{ b.name }}</option>
+            </select>
+            <router-link to="/dashboard/settings/branches" class="td-sidebar-branch__link" @click="closeSidebar">Manage branches</router-link>
+          </div>
           <nav class="td-nav flex-column" id="main-navigation">
-            <router-link to="/dashboard/home" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-th-large"></i>
+            <router-link
+              to="/dashboard/home"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip($t('dashboard'))"
+              :aria-label="collapsedNavTip($t('dashboard'))"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-th-large td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('dashboard') }}</span>
             </router-link>
             <div class="td-nav-section">Orders &amp; service</div>
-            <router-link to="/dashboard/orders" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-shopping-cart"></i>
+            <router-link
+              to="/dashboard/orders"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip(ordersNavTip)"
+              :aria-label="collapsedNavTip(ordersNavTip)"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-shopping-cart td-nav-ico" aria-hidden="true"></i>
               <span class="flex-grow-1">{{ $t('orders') }}</span>
               <span v-if="counts.orders > 0" class="badge bg-light text-dark text-xs leading-tight">{{ counts.orders }}</span>
             </router-link>
-            <router-link to="/dashboard/stock-check-requests" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-boxes"></i>
+            <router-link
+              to="/dashboard/stock-check-requests"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip($t('stockCheckRequests'))"
+              :aria-label="collapsedNavTip($t('stockCheckRequests'))"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-boxes td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('stockCheckRequests') }}</span>
             </router-link>
-            <router-link to="/dashboard/reservations" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-calendar-alt"></i>
+            <router-link
+              to="/dashboard/reservations"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip($t('reservations'))"
+              :aria-label="collapsedNavTip($t('reservations'))"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-calendar-alt td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('reservations') }}</span>
             </router-link>
             <div class="td-nav-section">Engagement</div>
-            <router-link to="/dashboard/contact-reqs" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-calendar-alt"></i>
+            <router-link
+              to="/dashboard/contact-reqs"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip($t('contactReqs'))"
+              :aria-label="collapsedNavTip($t('contactReqs'))"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-calendar-alt td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('contactReqs') }}</span>
             </router-link>
-            <router-link to="/dashboard/subscribers" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-calendar-alt"></i>
+            <router-link
+              to="/dashboard/subscribers"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip($t('subscribers'))"
+              :aria-label="collapsedNavTip($t('subscribers'))"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-calendar-alt td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('subscribers') }}</span>
             </router-link>
-            <router-link to="/dashboard/customers" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-users"></i>
+            <router-link
+              to="/dashboard/customers"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip($t('customers'))"
+              :aria-label="collapsedNavTip($t('customers'))"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-users td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('customers') }}</span>
             </router-link>
             <div class="td-nav-section">Menu</div>
-            <router-link to="/dashboard/bulletin" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-bullhorn"></i>
+            <router-link
+              to="/dashboard/bulletin"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip($t('bulletin'))"
+              :aria-label="collapsedNavTip($t('bulletin'))"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-bullhorn td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('bulletin') }}</span>
             </router-link>
-            <router-link to="/dashboard/categories" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-list"></i>
+            <router-link
+              to="/dashboard/categories"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip($t('categories'))"
+              :aria-label="collapsedNavTip($t('categories'))"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-list td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('categories') }}</span>
             </router-link>
-            <router-link to="/dashboard/products" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-box"></i>
+            <router-link
+              to="/dashboard/products"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip($t('products'))"
+              :aria-label="collapsedNavTip($t('products'))"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-box td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('products') }}</span>
             </router-link>
-            <router-link to="/dashboard/cms" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-file-alt"></i>
+            <router-link
+              to="/dashboard/cms"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip($t('content_system'))"
+              :aria-label="collapsedNavTip($t('content_system'))"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-file-alt td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('content_system') }}</span>
             </router-link>
             <router-link
               to="/dashboard/settings/general"
               class="td-nav-link text-xs leading-tight"
               :class="{ active: $route.path.startsWith('/dashboard/settings') }"
+              :title="collapsedNavTip('Business settings')"
+              :aria-label="collapsedNavTip('Business settings')"
               @click="closeSidebar"
             >
-              <i class="fas fa-cogs"></i>
+              <i class="fas fa-cogs td-nav-ico" aria-hidden="true"></i>
               <span>Business settings</span>
             </router-link>
             <router-link
               to="/dashboard/website-settings"
               class="td-nav-link text-xs leading-tight"
               :class="{ active: $route.path.startsWith('/dashboard/website-settings') }"
+              :title="collapsedNavTip('Website settings')"
+              :aria-label="collapsedNavTip('Website settings')"
               @click="closeSidebar"
             >
-              <i class="fas fa-globe"></i>
+              <i class="fas fa-globe td-nav-ico" aria-hidden="true"></i>
               <span>Website settings</span>
             </router-link>
             <div class="td-nav-section">Administration</div>
-            <router-link to="/dashboard/notifications" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-bell"></i>
+            <router-link
+              to="/dashboard/notifications"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip($t('notifications'))"
+              :aria-label="collapsedNavTip($t('notifications'))"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-bell td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('notifications') }}</span>
             </router-link>
-            <router-link to="/dashboard/roles" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-user-tag"></i>
+            <router-link
+              to="/dashboard/roles"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip($t('roles'))"
+              :aria-label="collapsedNavTip($t('roles'))"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-user-tag td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('roles') }}</span>
             </router-link>
-            <router-link to="/dashboard/users" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar">
-              <i class="fas fa-user"></i>
+            <router-link
+              to="/dashboard/users"
+              class="td-nav-link text-xs leading-tight"
+              active-class="active"
+              :title="collapsedNavTip($t('users'))"
+              :aria-label="collapsedNavTip($t('users'))"
+              @click="closeSidebar"
+            >
+              <i class="fas fa-user td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('users') }}</span>
             </router-link>
             <!-- <router-link to="/dashboard/maillogs" class="td-nav-link text-xs leading-tight" active-class="active" @click="closeSidebar"><i class="fas fa-envelope"></i> <span>{{ $t('mail_logs') }}</span></router-link> -->
-            <a href="javascript:void(0)" @click="logout" class="td-nav-link text-xs leading-tight">
-              <i class="fas fa-sign-out-alt"></i>
+            <a
+              href="javascript:void(0)"
+              class="td-nav-link text-xs leading-tight"
+              :title="collapsedNavTip($t('logout'))"
+              :aria-label="collapsedNavTip($t('logout'))"
+              @click="logout"
+            >
+              <i class="fas fa-sign-out-alt td-nav-ico" aria-hidden="true"></i>
               <span>{{ $t('logout') }}</span>
             </a>
           </nav>
@@ -346,13 +521,26 @@ import LanguageSwitcher from '../components/LanguageSwitcher.vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { ref, computed, onMounted } from 'vue'; // ✅ for reactivity
+import { useTenantBranches } from '../composables/useTenantBranches';
 
 export default {
   name: 'TenantDashboardLayout',
   components: {
     LanguageSwitcher
   },
+  provide() {
+    return {
+      getTenantSetting: () => this.setting
+    };
+  },
   setup() {
+    const {
+      branches,
+      activeBranchId,
+      activeBranch,
+      selectBranch
+    } = useTenantBranches();
+
     // ✅ Subscription state
     const subscription = ref(null);
 
@@ -428,7 +616,11 @@ export default {
       renewPlan,
       cancelTrial,
       choosePlan,
-      formatDate
+      formatDate,
+      branches,
+      activeBranchId,
+      activeBranch,
+      selectBranch
     };
   },
 
@@ -480,6 +672,14 @@ export default {
     },
     unreadCount() {
       return this.notifications.filter(n => !n.is_read).length;
+    },
+    userRoleLabel() {
+      if (!this.user) return 'Staff';
+      return this.user.role_name || 'Restaurant staff';
+    },
+    ordersNavTip() {
+      const base = this.$t('orders');
+      return this.counts.orders > 0 ? `${base} (${this.counts.orders})` : base;
     }
   },
 
@@ -530,6 +730,11 @@ export default {
   },
 
   methods: {
+    /** Native tooltip + aria when main sidebar is icon-only */
+    collapsedNavTip(label) {
+      if (!label || !this.sidebarCollapsed) return undefined;
+      return label;
+    },
     toggleSidebar() {
       this.sidebarOpen = !this.sidebarOpen;
       // Prevent body scroll when sidebar is open on mobile
@@ -720,9 +925,8 @@ export default {
     },
 
     handleClickOutsideDropdown(e) {
-      const dropdown = document.querySelector('.notification-dropdown');
-      const bell = document.querySelector('.fa-bell');
-      if (dropdown && !dropdown.contains(e.target) && !bell?.contains(e.target)) {
+      const wrap = document.getElementById('notification-wrapper');
+      if (wrap && !wrap.contains(e.target)) {
         this.closeNotificationDropdown();
       }
     },
@@ -797,12 +1001,154 @@ export default {
   flex-direction: column;
 }
 
-.td-help-btn,
-.td-notify-btn {
+.td-help-btn {
   color: var(--td-accent) !important;
 }
-.td-help-btn:hover,
-.td-notify-btn:hover {
+.td-help-btn:hover {
+  color: var(--td-accent-hover) !important;
+}
+
+.td-notify-btn {
+  border: none;
+  background: transparent;
+  padding: 0.15rem;
+  line-height: 1;
+  color: inherit;
+  border-radius: 12px;
+}
+.td-notify-btn:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--td-accent) 45%, transparent);
+  outline-offset: 2px;
+}
+.td-notify-btn:hover .td-notify-btn__ring {
+  background: #fff;
+  border-color: color-mix(in srgb, var(--td-accent) 35%, #e2e8f0);
+  color: var(--td-accent);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+.td-notify-btn__ring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 11px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  color: var(--td-muted);
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.td-notify-btn__icon {
+  font-size: 0.95rem;
+}
+.td-notify-badge {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  min-width: 1.2rem;
+  height: 1.2rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  background: var(--td-accent);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 800;
+  line-height: 1.2rem;
+  text-align: center;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0, 132, 77, 0.35);
+}
+
+.td-notify-dropdown {
+  min-width: 320px;
+  max-width: 95vw;
+  z-index: 2000;
+  right: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12) !important;
+}
+.td-notify-dropdown__head {
+  border-color: #e2e8f0 !important;
+}
+.td-notify-dropdown .notification-item:hover {
+  background: var(--td-accent-soft) !important;
+}
+
+.td-branch-wrap {
+  max-width: 12rem;
+}
+.td-branch-btn {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--td-ink) !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 11px !important;
+  padding: 0.4rem 0.65rem !important;
+  background: #fafafa !important;
+  text-decoration: none !important;
+  max-width: 100%;
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
+}
+.td-branch-btn:hover,
+.td-branch-btn:focus,
+.td-branch-btn.show {
+  background: #fff !important;
+  border-color: color-mix(in srgb, var(--td-accent) 28%, #e2e8f0) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--td-accent) 12%, #fff);
+}
+.td-branch-btn__pin {
+  color: var(--td-accent);
+  font-size: 0.88rem;
+  flex-shrink: 0;
+}
+.td-branch-btn__label {
+  max-width: 8.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.td-branch-dd {
+  min-width: 16.5rem;
+  padding: 0.35rem 0;
+  border-radius: 14px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 14px 44px rgba(15, 23, 42, 0.14) !important;
+}
+.td-branch-dd__head {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--td-muted) !important;
+}
+.td-branch-dd__item {
+  font-size: 0.86rem;
+  padding: 0.5rem 0.85rem !important;
+  margin: 0.06rem 0.4rem;
+  border-radius: 10px !important;
+  color: var(--td-ink);
+}
+.td-branch-dd__item:hover {
+  background: #f8fafc !important;
+  color: var(--td-ink) !important;
+}
+.td-branch-dd__item--active {
+  background: color-mix(in srgb, var(--td-accent) 11%, #fff) !important;
+  color: var(--td-accent) !important;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--td-accent) 28%, #e2e8f0);
+}
+.td-branch-dd__pin--active {
+  color: var(--td-accent) !important;
+}
+.td-branch-dd__manage {
+  color: var(--td-accent) !important;
+  font-size: 0.86rem;
+  margin-top: 0.15rem;
+}
+.td-branch-dd__manage:hover {
+  background: var(--td-accent-soft) !important;
   color: var(--td-accent-hover) !important;
 }
 .td-accent-icon {
@@ -811,7 +1157,7 @@ export default {
 .td-spinner {
   color: var(--td-accent);
 }
-.td-profile-avatar {
+.td-profile-avatar:not(.td-profile-avatar--warm) {
   background: var(--td-accent) !important;
 }
 /* Global text-xs and leading-tight utilities */
@@ -885,6 +1231,7 @@ export default {
   color: var(--td-ink);
   letter-spacing: -0.02em;
   line-height: 1.2;
+  text-decoration: none !important;
 }
 .td-brand__os {
   font-size: 0.7rem;
@@ -904,6 +1251,7 @@ export default {
   color: var(--td-ink);
   letter-spacing: -0.02em;
   line-height: 1.2;
+  text-decoration: none !important;
 }
 .td-brand__page-sub {
   font-size: 0.7rem;
@@ -915,21 +1263,65 @@ export default {
   flex: 1 1 auto;
   min-width: 0;
 }
+.td-header .navbar .nav-link,
+.td-header .navbar .nav-link:hover,
+.td-header .navbar .nav-link:focus,
+.td-header .navbar .router-link-active,
+.td-header .navbar .router-link-exact-active {
+  text-decoration: none !important;
+}
 .td-header__right {
   margin-left: 0.25rem;
 }
 .td-profile-trigger.dropdown-toggle::after {
-  margin-left: 0.1rem;
+  display: none;
+}
+.td-profile-trigger {
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+.td-profile-trigger:hover,
+.td-profile-trigger:focus,
+.td-profile-trigger:focus-visible {
+  text-decoration: none !important;
 }
 .td-profile-av {
   width: 36px;
   height: 36px;
+}
+.td-profile-av--squircle {
+  border-radius: 10px;
 }
 .td-profile-av-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+}
+.td-profile-avatar--warm {
+  background: var(--td-accent) !important;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+.td-profile-meta-name {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--td-ink);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  max-width: 10rem;
+  text-decoration: none !important;
+}
+.td-profile-meta-role {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--td-muted);
+  line-height: 1.25;
+  max-width: 10rem;
+}
+.td-profile-chev {
+  font-size: 0.65rem !important;
+  opacity: 0.75;
 }
 .td-header-lang {
   display: flex;
@@ -1069,6 +1461,33 @@ export default {
   outline: none;
   box-shadow: none;
 }
+.td-sidebar-branch__label {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--td-muted);
+  margin-bottom: 0.25rem;
+}
+.td-sidebar-branch__select {
+  border-radius: 10px;
+  border-color: #e2e8f0;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.td-sidebar-branch__link {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--td-accent);
+  text-decoration: none;
+}
+.td-sidebar-branch__link:hover {
+  text-decoration: underline;
+}
+
 .td-sidebar-scroll {
   overflow-y: auto;
   overflow-x: hidden;
@@ -1123,18 +1542,26 @@ export default {
   border-radius: 10px;
   font-size: 0.78rem;
   font-weight: 500;
-  text-decoration: none;
+  text-decoration: none !important;
   transition: background 0.15s ease, color 0.15s ease;
   white-space: nowrap;
   min-height: 34px;
   line-height: 1.25;
 }
-.td-nav-link i {
+.td-nav-link:hover,
+.td-nav-link:focus,
+.td-nav-link.router-link-active {
+  text-decoration: none !important;
+}
+.td-nav-ico {
   font-size: 0.9rem;
-  color: var(--td-accent);
-  width: 1.1rem;
+  color: var(--td-accent) !important;
+  width: 1.15rem;
   text-align: center;
   flex-shrink: 0;
+}
+.td-nav-link.active .td-nav-ico {
+  color: var(--td-accent) !important;
 }
 .td-nav-link span {
   flex: 1;
@@ -1155,8 +1582,8 @@ export default {
   background: var(--td-surface-grey);
   color: var(--td-ink);
 }
-.td-nav-link:hover:not(.active) i {
-  color: var(--td-accent);
+.td-nav-link:hover:not(.active) .td-nav-ico {
+  color: var(--td-accent) !important;
 }
 .td-nav-link.active {
   background: color-mix(in srgb, var(--td-accent) 14%, #fff);
@@ -1164,8 +1591,8 @@ export default {
   font-weight: 700;
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--td-accent) 35%, #fff);
 }
-.td-nav-link.active i {
-  color: var(--td-accent);
+.td-nav-link.active .td-nav-ico {
+  color: var(--td-accent) !important;
 }
 .td-content {
   min-width: 0;
@@ -1291,7 +1718,7 @@ export default {
     gap: 0.625rem;
     min-height: 40px;
   }
-  .td-nav-link i {
+  .td-nav-link .td-nav-ico {
     font-size: 1rem;
     width: 18px;
   }
@@ -1378,7 +1805,7 @@ export default {
     gap: 0.625rem;
     min-height: 40px;
   }
-  .td-nav-link i {
+  .td-nav-link .td-nav-ico {
     font-size: 1rem;
     width: 16px;
   }
@@ -1462,7 +1889,7 @@ export default {
     gap: 0.5rem;
     min-height: 38px;
   }
-  .td-nav-link i {
+  .td-nav-link .td-nav-ico {
     font-size: 0.95rem;
     width: 15px;
   }

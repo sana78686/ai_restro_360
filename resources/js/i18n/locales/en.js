@@ -1085,9 +1085,12 @@ export default {
     "user_profile": {
         "title": "Profile Settings",
         "personal_info": "Personal Information",
+        "personal_info_hint": "Update your name, email, and contact details.",
+        "change_photo": "Change photo",
+        "joined_prefix": "JOINED",
         // "first_name": "First Name",
         // "first_name_placeholder": "Enter your first name",
-        "name": "Name",
+        "name": "Full name",
         "name_placeholder": "Enter your name",
         "email": "Email Address",
         "email_placeholder": "Enter your email address",
@@ -1095,14 +1098,14 @@ export default {
         "phone_placeholder": "Enter your phone number",
         "address": "Address",
         "address_placeholder": "Enter your address",
-        "update_button": "Update Profile",
+        "update_button": "Save changes",
         "update_success": "Profile updated successfully!",
         "update_error": "Failed to update profile. Please try again.",
         "fetch_error": "Failed to load profile data.",
 
         "change_password": "Change Password",
-        "password_description": "Update your password to keep your account secure",
-        "change_password_button": "Change Password",
+        "password_description": "Keep your account secure with a strong password.",
+        "change_password_button": "Update password",
 
         "account_status": "Account Status",
         "member_since": "Member Since",
@@ -1131,6 +1134,25 @@ export default {
             manageUsers: 'Manage Users',
             manageRoles: 'Manage Roles',
             clearCache: 'Clear Cache'
+        },
+        pulse: {
+            title: 'Pulse',
+            insights: 'Insights',
+            overview: 'Overview',
+            searchPlaceholder: 'Search restaurant, owner or status…',
+            tenantsScope: '{count} restaurants',
+            healthScore: 'Platform health',
+            healthAverage: '/100 average',
+            suspendedHint: '{count} need attention',
+            pendingHint: '{count} awaiting review',
+            activeShare: '{pct}% of all restaurants',
+            userPulse: 'Directory size',
+            userHint: '{count} roles configured',
+            trendTitle: 'Platform activity',
+            trendSubtitle: 'Restaurants & users (indexed trend)',
+            recentTitle: 'Today\'s registrations',
+            systemTitle: 'System',
+            quickTitle: 'Shortcuts'
         }
     },
     dashboard: {

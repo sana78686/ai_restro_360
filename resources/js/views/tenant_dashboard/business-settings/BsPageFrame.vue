@@ -13,7 +13,7 @@
       <slot />
     </div>
     <footer v-if="showSave" class="bsp__foot">
-      <button type="button" class="bsp__save">
+      <button type="button" class="bsp__save" @click="onSaveClick">
         <i class="fas fa-check me-2" aria-hidden="true"></i>
         {{ saveLabel }}
       </button>
@@ -23,13 +23,28 @@
 </template>
 
 <script setup>
-defineProps({
+import { useSettingsSectionProgress } from '../../../composables/useSettingsSectionProgress'
+
+const props = defineProps({
   title: { type: String, required: true },
   subtitle: { type: String, default: '' },
   icon: { type: String, default: 'fas fa-cog' },
   showSave: { type: Boolean, default: true },
-  saveLabel: { type: String, default: 'Save changes' }
+  saveLabel: { type: String, default: 'Save changes' },
+  /** When set, marks this business-settings subsection complete (green dot in sidebar). */
+  progressKey: { type: String, default: '' }
 })
+
+const emit = defineEmits(['saved'])
+
+const { markDone } = useSettingsSectionProgress()
+
+function onSaveClick() {
+  if (props.progressKey) {
+    markDone('business', props.progressKey)
+  }
+  emit('saved')
+}
 </script>
 
 <style scoped>

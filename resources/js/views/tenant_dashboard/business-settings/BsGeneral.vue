@@ -4,6 +4,7 @@
     subtitle="Basic details and branding for your restaurant website."
     icon="fas fa-cog"
     save-label="Save changes"
+    progress-key="general"
   >
     <div class="row g-4">
       <div class="col-lg-7">

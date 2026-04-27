@@ -194,11 +194,11 @@
     </div>
 
     <div class="wsc__foot">
-      <button type="button" class="btn wsc__save" disabled>
-        <i class="fas fa-save me-2"></i>
+      <button type="button" class="btn wsc__save" @click="onSaveSection">
+        <i class="fas fa-save me-2" aria-hidden="true"></i>
         Save
       </button>
-      <span class="text-muted small ms-3">Static preview</span>
+      <span class="text-muted small ms-3">Marks this section complete (green dot) — full save API coming next.</span>
     </div>
   </div>
 </template>
@@ -206,30 +206,37 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useSettingsSectionProgress } from '../../../composables/useSettingsSectionProgress'
 
 const route = useRoute()
 const tab = computed(() => route.meta.websiteTab || 'template')
 
+const { markDone } = useSettingsSectionProgress()
+
+function onSaveSection() {
+  markDone('website', tab.value)
+}
+
 const heads = {
-  template: { title: 'Template', sub: 'Choose the design template for your restaurant website.', icon: 'fas fa-layer-group' },
-  branding: { title: 'Branding', sub: 'Restaurant name, logo, favicon, and description.', icon: 'fas fa-palette' },
-  seo: { title: 'SEO', sub: 'Titles, descriptions, and social previews.', icon: 'fas fa-search' },
-  domain: { title: 'Connect domain', sub: 'Use your own domain for your restaurant website.', icon: 'fas fa-link' },
-  contact: { title: 'Contact', sub: 'How guests reach you from the website.', icon: 'fas fa-address-book' },
-  hero: { title: 'Hero', sub: 'Top banner content for your homepage.', icon: 'fas fa-image' },
-  theme: { title: 'Theme colors', sub: 'Primary and secondary colors for your website.', icon: 'fas fa-star' },
-  social: { title: 'Social media', sub: 'Links to your public profiles.', icon: 'fas fa-share-alt' },
-  hours: { title: 'Opening hours', sub: 'When you are open for dine-in and pickup.', icon: 'fas fa-clock' },
-  sections: { title: 'Website sections', sub: 'Control blocks on your public site.', icon: 'fas fa-th-large' },
-  preferences: { title: 'Settings', sub: 'Fine-grained website behaviour.', icon: 'fas fa-sliders-h' }
+  template: { title: 'Storefront layout', sub: 'Pick how your online menu and homepage feel to guests.', icon: 'fas fa-layer-group' },
+  branding: { title: 'Brand & story', sub: 'Name, logo, and short story guests see on your public site.', icon: 'fas fa-palette' },
+  seo: { title: 'Findability', sub: 'Search and social previews so diners can find you.', icon: 'fas fa-search' },
+  domain: { title: 'Custom domain', sub: 'Point your own web address to this ordering site.', icon: 'fas fa-link' },
+  contact: { title: 'Guest contact', sub: 'Phone, email, and address shown to customers.', icon: 'fas fa-address-book' },
+  hero: { title: 'Home hero', sub: 'Top banner on your homepage — offers, photos, or welcome text.', icon: 'fas fa-image' },
+  theme: { title: 'Colors & theme', sub: 'Primary and accent colors for your guest-facing site.', icon: 'fas fa-star' },
+  social: { title: 'Social links', sub: 'Instagram, Facebook, and other profiles.', icon: 'fas fa-share-alt' },
+  hours: { title: 'Hours & service', sub: 'When you welcome dine-in, pickup, or delivery.', icon: 'fas fa-clock' },
+  sections: { title: 'Page sections', sub: 'Turn homepage blocks like menu highlights or gallery on or off.', icon: 'fas fa-th-large' },
+  preferences: { title: 'Site preferences', sub: 'Cookie banner, maintenance, and other behaviour.', icon: 'fas fa-sliders-h' }
 }
 
 const head = computed(() => heads[tab.value] || heads.template)
 
 const templates = [
-  { id: 'classic', name: 'Classic', on: false },
-  { id: 'modern', name: 'Modern', on: true },
-  { id: 'minimal', name: 'Minimal', on: false }
+  { id: 'classic', name: 'Heritage dining', on: false },
+  { id: 'modern', name: 'Showcase bistro', on: true },
+  { id: 'minimal', name: 'Essentials', on: false }
 ]
 </script>
 

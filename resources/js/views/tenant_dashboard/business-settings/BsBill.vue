@@ -1,5 +1,6 @@
 <template>
   <BsPageFrame
+    progress-key="bill"
     title="Bill Settings"
     subtitle="Logo and footer used on printed bills and kitchen tickets."
     icon="fas fa-file-invoice"

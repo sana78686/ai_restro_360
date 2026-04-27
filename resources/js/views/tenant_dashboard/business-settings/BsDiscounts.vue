@@ -1,5 +1,6 @@
 <template>
   <BsPageFrame
+    progress-key="discounts"
     title="Discounts"
     subtitle="Configure POS presets, manager PIN, and required reasons."
     icon="fas fa-percent"

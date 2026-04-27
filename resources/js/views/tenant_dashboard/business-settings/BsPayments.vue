@@ -1,5 +1,6 @@
 <template>
   <BsPageFrame
+    progress-key="payments"
     title="Payment accounts"
     subtitle="Bank accounts, mobile wallets, or cash drawers for reconciliation."
     icon="fas fa-wallet"

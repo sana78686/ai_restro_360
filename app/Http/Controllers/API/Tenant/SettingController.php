@@ -54,7 +54,7 @@ class SettingController extends Controller
             // dd($this->appendLogoUrlToSetting($settings));
             return response()->json([
                 'success' => true,
-                'data' => $this->appendLogoUrlToSetting($settings)
+                'data' => $this->prepareSettingPayload($settings),
             ]);
         } catch (\Exception $e) {
             Log::error('Error fetching settings: ' . $e->getMessage());
@@ -168,7 +168,7 @@ class SettingController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Settings updated successfully',
-                'data' => $settings
+                'data' => $this->prepareSettingPayload($settings),
             ]);
         } catch (\Exception $e) {
             Log::error('Error updating settings: ' . $e->getMessage());
@@ -442,7 +442,7 @@ public function uploadLogo(Request $request)
                 'url' => $url,
                 's3_path' => $path,
             ],
-            'setting' => $this->appendLogoUrlToSetting($setting),
+            'setting' => $this->prepareSettingPayload($setting),
         ]);
 
     } catch (\Exception $e) {
@@ -460,15 +460,15 @@ public function uploadLogo(Request $request)
 
             Log::info("Fetching public settings", [$settings]);
             if (!$settings) {
-                 return response()->json([$tenantID =
-
+                return response()->json([
                     'success' => false,
-                    'message' => 'Settings not found'
+                    'message' => 'Settings not found',
                 ], 404);
             }
+
             return response()->json([
                 'success' => true,
-                'data' => $this->appendLogoUrlToSetting($settings)
+                'data' => $this->prepareSettingPayload($settings),
             ]);
         } catch (\Exception $e) {
             Log::error('Error fetching public settings: ' . $e->getMessage());
@@ -543,6 +543,53 @@ public function uploadLogo(Request $request)
         $settings->logo_url = null;
         return $settings;
     }
+
+    /**
+     * Logo + tenant hostname from central `domains` (and optional subdomain fallback).
+     */
+    protected function prepareSettingPayload($settings)
+    {
+        $withLogo = $this->appendLogoUrlToSetting($settings);
+
+        return $this->appendTenantPublicSiteToSetting($withLogo);
+    }
+
+    protected function appendTenantPublicSiteToSetting($settings)
+    {
+        if (! $settings) {
+            return $settings;
+        }
+
+        try {
+            $tenant = tenant();
+            if (! $tenant) {
+                return $settings;
+            }
+
+            $host = $tenant->domains()->orderBy('id')->value('domain');
+
+            if (! $host && filled($tenant->subdomain)) {
+                $host = $tenant->subdomain.'.'.ltrim((string) config('app.domain'), '.');
+            }
+
+            if ($host) {
+                $host = preg_replace('#^https?://#i', '', rtrim((string) $host, '/'));
+                $host = preg_replace('#/.*$#', '', $host);
+
+                $lower = strtolower($host);
+                $isLocal = str_contains($lower, 'localhost') || str_contains($lower, '127.0.0.1');
+                $scheme = $isLocal ? 'http' : 'https';
+
+                $settings->setAttribute('public_website_host', $host);
+                $settings->setAttribute('public_website_url', $scheme.'://'.$host);
+            }
+        } catch (\Throwable $e) {
+            Log::debug('appendTenantPublicSiteToSetting: '.$e->getMessage());
+        }
+
+        return $settings;
+    }
+
     public function email_index()
 
     {
@@ -638,7 +685,7 @@ public function uploadLogo(Request $request)
             return response()->json([
                 'success' => true,
                 'message' => 'Settings updated successfully',
-                'data' => $settings
+                'data' => $this->prepareSettingPayload($settings),
             ]);
         } catch (\Exception $e) {
             Log::error('Error updating settings: ' . $e->getMessage());

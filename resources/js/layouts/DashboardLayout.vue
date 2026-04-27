@@ -1,89 +1,107 @@
 <template>
   <div class="dashboard-layout">
-    <!-- Sidebar -->
-    <div class="sidebar" :class="[{ 'collapsed': isSidebarCollapsed }, { 'show': isSidebarMobileOpen }]">
-      <div class="sidebar-header">
-        <img src="/assets/logo/airestro360.png" alt="Ai Restro 360" class="logo">
-        <button class="collapse-btn" @click="toggleSidebar">
-          <i class="fas" :class="isSidebarCollapsed ? 'fa-angle-right' : 'fa-angle-left'"></i>
+    <div class="sidebar-rail" :class="{ 'show': isSidebarMobileOpen }">
+      <router-link
+        to="/dashboard"
+        class="rail-brand"
+        :title="$t('dashboard')"
+      >
+        <i class="fas fa-power-off"></i>
+      </router-link>
+
+      <nav class="rail-nav" aria-label="Main">
+        <router-link
+          to="/dashboard"
+          class="rail-item"
+          :class="{ active: $route.name === 'dashboard' }"
+          :title="$t('dashboard')"
+        >
+          <span class="rail-icon"><i class="fas fa-circle-dot"></i></span>
+        </router-link>
+        <router-link
+          to="/dashboard/tenants"
+          class="rail-item"
+          :class="{ active: $route.name === 'tenants' }"
+          :title="$t('restaurants')"
+        >
+          <span class="rail-icon"><i class="fas fa-store"></i></span>
+        </router-link>
+        <router-link
+          to="/dashboard/users"
+          class="rail-item"
+          :class="{ active: $route.name === 'users' }"
+          :title="$t('users')"
+        >
+          <span class="rail-icon"><i class="fas fa-users"></i></span>
+        </router-link>
+        <router-link
+          to="/dashboard/plans"
+          class="rail-item"
+          :class="{ active: $route.name === 'plans' }"
+          :title="$t('plans')"
+        >
+          <span class="rail-icon"><i class="fas fa-layer-group"></i></span>
+        </router-link>
+        <router-link
+          to="/dashboard/subscriptions"
+          class="rail-item"
+          :class="{ active: $route.name === 'subscriptions' }"
+          :title="$t('subscriptions')"
+        >
+          <span class="rail-icon"><i class="fas fa-calendar-check"></i></span>
+        </router-link>
+        <router-link
+          to="/dashboard/roles"
+          class="rail-item"
+          :class="{ active: $route.name === 'roles' }"
+          :title="$t('roles')"
+        >
+          <span class="rail-icon"><i class="fas fa-user-shield"></i></span>
+        </router-link>
+        <router-link
+          to="/dashboard/mail-logs"
+          class="rail-item"
+          :class="{ active: $route.name === 'mail-logs' }"
+          :title="$t('Mail logs')"
+        >
+          <span class="rail-icon"><i class="fas fa-envelope"></i></span>
+        </router-link>
+      </nav>
+
+      <div class="rail-footer">
+        <button
+          type="button"
+          class="rail-item rail-item--btn"
+          :title="$t('logout')"
+          @click.prevent="handleLogout"
+        >
+          <span class="rail-icon"><i class="fas fa-right-from-bracket"></i></span>
         </button>
       </div>
-
-      <div class="sidebar-user">
-        <div class="user-avatar">
-          <i class="fas fa-user"></i>
-        </div>
-        <div class="user-info" v-if="!isSidebarCollapsed">
-          <h6 class="mb-0">{{ user.name }}</h6>
-          <small class="text-muted">Super User</small>
-        </div>
-      </div>
-
-      <nav class="sidebar-nav">
-        <router-link to="/dashboard" class="nav-item" :class="{ active: $route.name === 'dashboard' }">
-          <i class="fas fa-tachometer-alt"></i>
-          <span v-if="!isSidebarCollapsed">{{ $t('dashboard') }}</span>
-        </router-link>
-
-        <router-link to="/dashboard/tenants" class="nav-item" :class="{ active: $route.name === 'tenants' }">
-          <i class="fas fa-store"></i>
-          <span v-if="!isSidebarCollapsed">{{ $t('restaurants') }}</span>
-        </router-link>
-
-        <router-link to="/dashboard/users" class="nav-item" :class="{ active: $route.name === 'users' }">
-          <i class="fas fa-users"></i>
-          <span v-if="!isSidebarCollapsed">{{ $t('users') }}</span>
-        </router-link>
-
-        <router-link to="/dashboard/plans" class="nav-item" :class="{ active: $route.name === 'plans' }">
-          <i class="fas fa-user-shield"></i>
-          <span v-if="!isSidebarCollapsed">{{ $t('plans') }}</span>
-        </router-link>
-
-        <!-- <router-link to="/dashboard/payments" class="nav-item" :class="{ active: $route.name === 'payments' }">
-          <i class="fas fa-credit-card"></i>
-          <span v-if="!isSidebarCollapsed">{{ $t('payments') || 'Payments' }}</span>
-        </router-link> -->
-
-        <router-link to="/dashboard/subscriptions" class="nav-item" :class="{ active: $route.name === 'subscriptions' }">
-          <i class="fas fa-calendar-check"></i>
-          <span v-if="!isSidebarCollapsed">{{ $t('subscriptions') || 'Subscriptions' }}</span>
-        </router-link>
-
-        <router-link to="/dashboard/roles" class="nav-item" :class="{ active: $route.name === 'roles' }">
-          <i class="fas fa-user-shield"></i>
-          <span v-if="!isSidebarCollapsed">{{ $t('roles') }}</span>
-        </router-link>
-        <router-link to="/dashboard/mail-logs" class="nav-item" :class="{ active: $route.name === 'mail-logs' }">
-          <i class="fas fa-envelope"></i>
-          <span v-if="!isSidebarCollapsed">{{ $t('Mail logs') }}</span>
-        </router-link>
-
-        <a href="#" class="nav-item" @click.prevent="handleLogout">
-          <i class="fas fa-sign-out-alt"></i>
-          <span v-if="!isSidebarCollapsed">{{ $t('logout') }}</span>
-        </a>
-      </nav>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content" :class="{ 'expanded': isSidebarCollapsed }">
-      <!-- Top Navigation -->
+    <div class="main-shell">
+      <div class="shell-accent" aria-hidden="true" />
+
       <nav class="top-nav">
-        <button class="sidebar-toggle d-md-none me-3" @click="isSidebarMobileOpen = !isSidebarMobileOpen">
+        <button
+          type="button"
+          class="sidebar-toggle d-md-none"
+          @click="isSidebarMobileOpen = !isSidebarMobileOpen"
+        >
           <i class="fas fa-bars"></i>
         </button>
-        <div class="d-flex align-items-center">
-          <h4 class="page-title mb-0">{{ pageTitle }}</h4>
+        <div class="top-nav-title-wrap">
+          <h4 v-if="route.name !== 'dashboard'" class="page-title mb-0">{{ pageTitle }}</h4>
         </div>
         <div class="top-nav-right">
-          <LanguageSwitcher class="me-2" />
+          <LanguageSwitcher class="me-1" />
           <div class="dropdown">
-            <button class="btn btn-link dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown">
+            <button class="btn btn-icon" type="button" id="userMenu" data-bs-toggle="dropdown" :aria-label="user.email">
               <i class="fas fa-user-circle"></i>
             </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><h6 class="dropdown-header">{{ user.email }}</h6></li>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+              <li><h6 class="dropdown-header text-truncate">{{ user.email }}</h6></li>
               <li><hr class="dropdown-divider"></li>
               <li>
                 <a class="dropdown-item" href="#" @click.prevent="handleLogout">
@@ -95,14 +113,12 @@
         </div>
       </nav>
 
-      <!-- Page Content -->
       <div class="page-content">
-        <router-view></router-view>
+        <router-view />
       </div>
     </div>
 
-    <!-- Sidebar Backdrop for Mobile -->
-    <div v-if="isSidebarMobileOpen" class="sidebar-backdrop d-md-none" @click="isSidebarMobileOpen = false"></div>
+    <div v-if="isSidebarMobileOpen" class="sidebar-backdrop d-md-none" @click="isSidebarMobileOpen = false" />
   </div>
 </template>
 
@@ -123,7 +139,6 @@ export default {
     const { t } = useI18n()
     const router = useRouter()
     const route = useRoute()
-    const isSidebarCollapsed = ref(false)
     const isSidebarMobileOpen = ref(false)
     const user = computed(() => {
       return JSON.parse(localStorage.getItem('user') || '{}')
@@ -145,14 +160,12 @@ export default {
           return t('subscriptions') || 'Subscriptions'
         case 'plans':
           return t('plans') || 'Plans'
+        case 'mail-logs':
+          return t('Mail logs')
         default:
           return t('dashboard')
       }
     })
-
-    const toggleSidebar = () => {
-      isSidebarCollapsed.value = !isSidebarCollapsed.value
-    }
 
     const handleLogout = async () => {
       try {
@@ -212,8 +225,7 @@ export default {
     return {
       user,
       pageTitle,
-      isSidebarCollapsed,
-      toggleSidebar,
+      route,
       handleLogout,
       isSidebarMobileOpen,
     }
@@ -222,249 +234,209 @@ export default {
 </script>
 
 <style scoped>
+/* Pulse-style super admin shell: narrow icon rail + light canvas */
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
+  background: #f3f4f6;
 }
 
-.sidebar {
-  width: 250px;
-  background: #2c3e50;
-  color: #ecf0f1;
-  transition: all 0.3s ease;
+.sidebar-rail {
+  width: 72px;
+  flex-shrink: 0;
+  background: #fff;
+  border-right: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
-}
-
-.sidebar.collapsed {
-  width: 70px;
-}
-
-.sidebar-header {
-  padding: 1rem;
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0;
+  z-index: 1060;
 }
 
-.logo {
-  height: 35px;
-  width: auto;
-}
-
-.collapse-btn {
-  background: transparent;
-  border: none;
-  color: #ecf0f1;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-
-.sidebar-user {
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.user-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+.rail-brand {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.user-info h6 {
-  color: #ecf0f1;
-  font-size: 0.9rem;
-}
-
-.sidebar-nav {
-  padding: 1rem 0;
-  flex-grow: 1;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  color: #ecf0f1;
+  color: #059669;
+  background: #ecfdf5;
   text-decoration: none;
-  transition: all 0.3s ease;
-  gap: 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 1.1rem;
 }
 
-.nav-item:hover, .nav-item.active {
-  background: rgba(255, 255, 255, 0.1);
-  color: #3498db;
-}
-
-.nav-item i {
-  width: 20px;
-  text-align: center;
-}
-
-.main-content {
-  flex-grow: 1;
-  background: #f8f9fa;
-  transition: all 0.3s ease;
-}
-
-.main-content.expanded {
-  margin-left: 0;
+.rail-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 1;
   width: 100%;
 }
 
-.top-nav {
-  background: white;
-  padding: 1rem 2rem;
+.rail-item {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #dee2e6;
+  justify-content: center;
+  color: #6b7280;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.rail-item:hover {
+  background: #f3f4f6;
+  color: #059669;
+}
+
+.rail-item.active {
+  background: #059669;
+  color: #fff;
+}
+
+.rail-item--btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.rail-item--btn:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.rail-icon {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.rail-footer {
+  padding-top: 0.5rem;
+  border-top: 1px solid #f3f4f6;
+  margin-top: 0.5rem;
+}
+
+.main-shell {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: #f3f4f6;
+}
+
+.shell-accent {
+  position: absolute;
+  top: -80px;
+  left: -80px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #059669 0%, #047857 28%, #111827 28%, #111827 42%, transparent 42%);
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.top-nav {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  padding: 1rem 1.75rem 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   flex-wrap: nowrap;
 }
 
-.top-nav .d-flex.align-items-center {
-  flex: 1 1 auto;
+.top-nav-title-wrap {
+  flex: 1;
   min-width: 0;
+}
+
+.page-title {
+  color: #111827;
+  font-weight: 600;
+  font-size: 1.125rem;
 }
 
 .top-nav-right {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.35rem;
 }
 
-.page-title {
-  color: #2c3e50;
-  font-weight: 600;
-}
-
-.top-nav-right .btn-link {
-  color: #2c3e50;
-  text-decoration: none;
+.btn-icon {
+  border: none;
+  background: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  color: #374151;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.25rem;
 }
 
+.btn-icon:hover {
+  background: #f9fafb;
+  color: #059669;
+}
+
 .page-content {
-  padding: 2rem;
+  position: relative;
+  z-index: 1;
+  padding: 0 1.75rem 2rem;
+  flex: 1;
 }
 
 .sidebar-toggle {
-  background: none;
+  background: #fff;
   border: none;
-  font-size: 1.5rem;
-  color: #2c3e50;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  font-size: 1.25rem;
+  color: #374151;
   cursor: pointer;
-  display: inline-block;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
-/* Responsive Design */
 .sidebar-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.3);
+  inset: 0;
+  background: rgba(17, 24, 39, 0.35);
   z-index: 1049;
 }
-@media (max-width: 1200px) {
-  .page-content {
-    padding: 1.5rem;
-  }
-}
-@media (max-width: 992px) {
-  .sidebar {
-    width: 200px;
-  }
-  .main-content {
-    padding: 1rem 0.5rem;
-  }
-  .page-content {
-    padding: 1rem;
-  }
-  .top-nav {
-    padding: 1rem 0.5rem;
-  }
-}
+
 @media (max-width: 768px) {
-  .sidebar {
+  .sidebar-rail {
     position: fixed;
     left: 0;
     top: 0;
     height: 100vh;
-    z-index: 1050;
-    width: 200px;
     transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    transition: transform 0.25s ease;
+    box-shadow: none;
   }
-  .sidebar.show {
+  .sidebar-rail.show {
     transform: translateX(0);
-    box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.12);
   }
-  .main-content {
-    margin-left: 0 !important;
-    padding: 1rem 0.5rem;
+  .page-content {
+    padding: 0 1rem 1.5rem;
   }
   .top-nav {
-    flex-wrap: nowrap;
-    padding: 1rem 0.5rem;
-  }
-  .top-nav .d-flex.align-items-center {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-  .top-nav-right {
-    flex-shrink: 0;
-    gap: 0.5rem;
+    padding: 0.75rem 1rem 0.5rem;
   }
   .page-title {
     font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-@media (max-width: 576px) {
-  .top-nav {
-    flex-direction: row;
-    align-items: center;
-    padding: 0.75rem 0.25rem;
-  }
-  .top-nav .d-flex.align-items-center {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-  .top-nav-right {
-    flex-shrink: 0;
-    gap: 0.25rem;
-  }
-  .page-title {
-    font-size: 0.95rem;
-  }
-  .sidebar {
-    width: 160px;
-  }
-  .sidebar-header, .sidebar-user, .sidebar-nav {
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
-  }
-  .main-content {
-    padding: 0.5rem 0.25rem;
-  }
-  .page-content {
-    padding: 0.5rem;
-  }
-  .btn, .sidebar-toggle, .collapse-btn {
-    font-size: 1.1rem;
-    padding: 0.4rem 0.6rem;
   }
 }
 </style>

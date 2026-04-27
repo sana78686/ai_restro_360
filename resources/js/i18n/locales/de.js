@@ -1042,7 +1042,10 @@ export default {
     "user_profile": {
         "title": "Profileinstellungen",
         "personal_info": "Persönliche Informationen",
-        "name": "Name",
+        "personal_info_hint": "Aktualisieren Sie Name, E-Mail und Kontaktdaten.",
+        "change_photo": "Foto ändern",
+        "joined_prefix": "MITGLIED SEIT",
+        "name": "Vollständiger Name",
         "name_placeholder": "Geben Sie Ihren Namen ein",
         "email": "E-Mail-Adresse",
         "email_placeholder": "Geben Sie Ihre E-Mail-Adresse ein",

@@ -199,67 +199,67 @@ const routes = [
           {
             path: 'template',
             name: 'tenant-website-template',
-            meta: { title: 'Template', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'template' },
+            meta: { title: 'Storefront layout', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'template' },
             component: () => import('../views/tenant_dashboard/website-settings/WebsiteSettingsContent.vue')
           },
           {
             path: 'branding',
             name: 'tenant-website-branding',
-            meta: { title: 'Branding', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'branding' },
+            meta: { title: 'Brand & story', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'branding' },
             component: () => import('../views/tenant_dashboard/website-settings/WebsiteSettingsContent.vue')
           },
           {
             path: 'seo',
             name: 'tenant-website-seo',
-            meta: { title: 'SEO', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'seo' },
+            meta: { title: 'Findability', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'seo' },
             component: () => import('../views/tenant_dashboard/website-settings/WebsiteSettingsContent.vue')
           },
           {
             path: 'domain',
             name: 'tenant-website-domain',
-            meta: { title: 'Domain', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'domain' },
+            meta: { title: 'Custom domain', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'domain' },
             component: () => import('../views/tenant_dashboard/website-settings/WebsiteSettingsContent.vue')
           },
           {
             path: 'contact',
             name: 'tenant-website-contact',
-            meta: { title: 'Contact', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'contact' },
+            meta: { title: 'Guest contact', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'contact' },
             component: () => import('../views/tenant_dashboard/website-settings/WebsiteSettingsContent.vue')
           },
           {
             path: 'hero',
             name: 'tenant-website-hero',
-            meta: { title: 'Hero', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'hero' },
+            meta: { title: 'Home hero', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'hero' },
             component: () => import('../views/tenant_dashboard/website-settings/WebsiteSettingsContent.vue')
           },
           {
             path: 'theme',
             name: 'tenant-website-theme',
-            meta: { title: 'Theme', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'theme' },
+            meta: { title: 'Colors & theme', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'theme' },
             component: () => import('../views/tenant_dashboard/website-settings/WebsiteSettingsContent.vue')
           },
           {
             path: 'social',
             name: 'tenant-website-social',
-            meta: { title: 'Social', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'social' },
+            meta: { title: 'Social links', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'social' },
             component: () => import('../views/tenant_dashboard/website-settings/WebsiteSettingsContent.vue')
           },
           {
             path: 'hours',
             name: 'tenant-website-hours',
-            meta: { title: 'Hours', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'hours' },
+            meta: { title: 'Hours & service', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'hours' },
             component: () => import('../views/tenant_dashboard/website-settings/WebsiteSettingsContent.vue')
           },
           {
             path: 'sections',
             name: 'tenant-website-sections',
-            meta: { title: 'Sections', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'sections' },
+            meta: { title: 'Page sections', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'sections' },
             component: () => import('../views/tenant_dashboard/website-settings/WebsiteSettingsContent.vue')
           },
           {
             path: 'preferences',
             name: 'tenant-website-preferences',
-            meta: { title: 'Website preferences', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'preferences' },
+            meta: { title: 'Site preferences', eatDeskHeader: true, eatDeskTitle: 'Website Settings', websiteTab: 'preferences' },
             component: () => import('../views/tenant_dashboard/website-settings/WebsiteSettingsContent.vue')
           }
         ]
@@ -359,7 +359,7 @@ const routes = [
       {
         path: '/dashboard/personal-settings',
         name: 'tenant-personal-settings',
-        meta: { title: 'Personal Settings' },
+        meta: { title: 'Profile' },
         component: () => import('../views/tenant_dashboard/PersonalSettings.vue')
       },
       // In your router file - it's already there!
